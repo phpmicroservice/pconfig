@@ -4,12 +4,12 @@ networks:
     external:
       name: ggggg
 services:
-  php:
-    build: build
-    image: spma_pconfig:master
+  pconfig:
+    build: .
+    image: pconfig:master
     privileged: false
     restart: unless-stopped
     ports:
-    - 80
-    volumes:
-    - .:/var/www/html
+    - 9016:80
+    environment:
+    - PMA_ARBITRARY=1

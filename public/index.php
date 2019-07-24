@@ -12,9 +12,11 @@ include WWW_ROOT . '/vendor/autoload.php';
 # 处理其他
 
 $dotenv = \Dotenv\Dotenv::create(WWW_ROOT);
-$dotenv->load();
+if(is_file(WWW_ROOT.'/.env')){
+    $dotenv->load();
+}
 $dotenv->required('DATABASE_TYPE')->allowedValues([
-    'mysql', 'PostgreSQL', 'Sqlite', 'MongoDB'
+    'mysql', 'postgresql', 'sqlite', 'mongodb'
 ]);
 
 # 

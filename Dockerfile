@@ -7,8 +7,6 @@ FROM php:7.2-apache
 
 MAINTAINER Dongasai 1514582970@qq.com
 
-
-RUN cat  /etc/apt/sources.list
 #更新apt-get源 使用163的源
 RUN echo "deb http://mirrors.163.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list && \
     echo "deb http://mirrors.163.com/debian/ stretch-updates main non-free contrib " >> /etc/apt/sources.list  && \
@@ -20,23 +18,15 @@ RUN echo "deb http://mirrors.163.com/debian/ stretch main non-free contrib" > /e
     echo "deb-src http://mirrors.163.com/debian-security/ stretch/updates main non-free contrib " >> /etc/apt/sources.list
 
 RUN apt-get update;
-RUN apt-get install -y git vim wget zip zlib1g-dev;
+RUN apt-get install -y git wget zip zlib1g-dev;
 # 安装常用扩展,开启伪静态
 RUN a2enmod rewrite;docker-php-ext-install pdo pdo_mysql;docker-php-ext-enable pdo pdo_mysql;
-RUN pecl install redis-4.2.0 \
-    && docker-php-ext-enable redis
-RUN apt-get install -y libmemcached-dev zlib1g-dev \
-    && pecl install memcached-3.0.4\
-    && docker-php-ext-enable memcached
-RUN docker-php-ext-install bcmath mbstring;
-RUN docker-php-ext-install zip;
-RUN apt-get install -y \
-		libfreetype6-dev \
-		libjpeg62-turbo-dev \
-		libpng-dev \
-	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-	&& docker-php-ext-install gd
 
+# 设置运行目录为public
+COPY default.conf /etc/apache2/sites-enabled/000-default.conf
+
+
+RUN docker-php-ext-install bcmath mbstring;
 
 # 安装phalcon 版本
 ENV PHALCON_VERSION=3.4.3
@@ -57,8 +47,10 @@ RUN curl -sSL "https://github.com/phalcon/phalcon-devtools/archive/v${PHALCON_DE
     && ln -s /home/phalcon-devtools-3.4.1/phalcon.php /usr/bin/phalcon
 #重置工作目录
 WORKDIR /var/www/html
+# 预部署
+COPY composer.json /var/www/html/
+COPY composer.lock /var/www/html/
+RUN composer install
 
-# 设置运行目录为public
-COPY default.conf /etc/apache2/sites-enabled/000-default.conf
 # 部署项目
 COPY . /var/www/html/
