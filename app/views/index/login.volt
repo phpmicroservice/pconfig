@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
                         <div class="col-sm-10">
-                            <input type="password" name="username" class="form-control" 
+                            <input type="password" name="password" class="form-control"
                                    placeholder="密码,默认 123456">
                         </div>
                     </div>

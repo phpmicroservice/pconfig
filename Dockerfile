@@ -7,15 +7,15 @@ FROM php:7.2-apache
 
 MAINTAINER Dongasai 1514582970@qq.com
 
-#更新apt-get源 使用163的源
-RUN echo "deb http://mirrors.163.com/debian/ stretch main non-free contrib" > /etc/apt/sources.list && \
-    echo "deb http://mirrors.163.com/debian/ stretch-updates main non-free contrib " >> /etc/apt/sources.list  && \
-    echo "deb http://mirrors.163.com/debian/ stretch-backports main non-free contrib " >> /etc/apt/sources.list && \
-    echo "deb-src http://mirrors.163.com/debian/ stretch main non-free contrib " >> /etc/apt/sources.list && \
-    echo "deb-src http://mirrors.163.com/debian/ stretch-updates main non-free contrib " >> /etc/apt/sources.list && \
-    echo "deb-src http://mirrors.163.com/debian/ stretch-backports main non-free contrib " >> /etc/apt/sources.list  && \
-    echo "deb http://mirrors.163.com/debian-security/ stretch/updates main non-free contrib  " >> /etc/apt/sources.list  && \
-    echo "deb-src http://mirrors.163.com/debian-security/ stretch/updates main non-free contrib " >> /etc/apt/sources.list
+#更新apt-get源 使用163的源 buster/updates
+RUN echo "deb http://mirrors.163.com/debian/ buster main non-free contrib" > /etc/apt/sources.list && \
+    echo "deb http://mirrors.163.com/debian/ buster-updates main non-free contrib " >> /etc/apt/sources.list  && \
+    echo "deb http://mirrors.163.com/debian/ buster-backports main non-free contrib " >> /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.163.com/debian/ buster main non-free contrib " >> /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.163.com/debian/ buster-updates main non-free contrib " >> /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.163.com/debian/ buster-backports main non-free contrib " >> /etc/apt/sources.list  && \
+    echo "deb http://mirrors.163.com/debian-security/ buster/updates main non-free contrib  " >> /etc/apt/sources.list  && \
+    echo "deb-src http://mirrors.163.com/debian-security/ buster/updates main non-free contrib " >> /etc/apt/sources.list
 
 RUN apt-get update;
 RUN apt-get install -y git wget zip zlib1g-dev;
@@ -40,11 +40,11 @@ RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VE
 RUN curl -sS https://getcomposer.org/installer | php;mv composer.phar /usr/local/bin/composer
 # 安装phalcon 的开发工具包
 WORKDIR /home
-ENV PHALCON_DEVTOOL_VERSION=3.4.1
+ENV PHALCON_DEVTOOL_VERSION=3.4.4
 RUN curl -sSL "https://github.com/phalcon/phalcon-devtools/archive/v${PHALCON_DEVTOOL_VERSION}.tar.gz" | tar -xz \
     && cd phalcon-devtools-${PHALCON_DEVTOOL_VERSION} \
     && ./phalcon.sh \
-    && ln -s /home/phalcon-devtools-3.4.1/phalcon.php /usr/bin/phalcon
+    && ln -s /home/phalcon-devtools-${PHALCON_DEVTOOL_VERSION}/phalcon.php /usr/bin/phalcon
 #重置工作目录
 WORKDIR /var/www/html
 # 预部署

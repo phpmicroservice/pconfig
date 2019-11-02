@@ -52,7 +52,7 @@ class Index extends Controller
        
         $data= [
             'username'=>$this->request->getPost('username','string'),
-            'password'=>$this->request->getPost('username','string'),
+            'password' => $this->request->get('password', 'string'),
         ];
         $validation = new \app\validation\Login();
         $message= $validation->validate($data);

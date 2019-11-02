@@ -13,3 +13,12 @@ services:
     - 9016:80
     environment:
     - PMA_ARBITRARY=1
+  dev:
+    build: .
+    image: pconfig:master
+    privileged: false
+    restart: unless-stopped
+    ports:
+      - 9017:80
+    volumes:
+      - .:/var/www/html
