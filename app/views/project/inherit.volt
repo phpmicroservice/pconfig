@@ -17,10 +17,8 @@
             {% set links = [['href':'/project/index','name':'配置对象'],['name':'比对']] %}
             {{ breadcrumb(links) }}
             {% include '/project/infomcaro.volt' %}
-            
-            
-            
-            
+
+
             <table class="table table-bordered table-hover">
 
                 <thead>

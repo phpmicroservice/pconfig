@@ -27,6 +27,7 @@ class Project extends Login
         }
         $consumer = new \pconfig\Project();
         $info= $consumer->pagelist($where, $page);
+
         $this->view->setVar('info', $info);
         return $this->view->render('project', 'index');
         
@@ -112,7 +113,7 @@ class Project extends Login
         if(!$info){
             $this->error('不存在的内容');
         }
-        $content= \pconfig\Project::get($info->name);
+        $content = \pconfig\Project::get($info->name, $info->pid);
        
         $this->view->setVar('content', $content);
         $this->view->setVar('info', $info);
@@ -126,7 +127,7 @@ class Project extends Login
         if (!$info) {
             $this->error('不存在的内容');
         }
-        $content = \pconfig\Project::get($info->name);
+        $content = \pconfig\Project::get($info->name, $info->pid);
 
         $this->view->setVar('content', $content);
         $this->view->setVar('info', $info);
@@ -191,14 +192,14 @@ class Project extends Login
         if(!$info){
             $this->error('不存在的内容');
         }
-        $content= \pconfig\Project::get($info->name);
+        $content = \pconfig\Project::get($info->name, $info->pid);
         $this->view->setVar('content', $content);
         $this->view->setVar('info', $info);
         
         # 要比对的
         $minfo = \pconfig\Project::info($info->pid);
         $mcontent= \pconfig\Project::get($minfo->name);
-     
+
         $this->view->setVar('mcontent', $mcontent);
         $this->view->setVar('minfo', $minfo);
         return $this->view->render('project', 'merge');

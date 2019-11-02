@@ -66,6 +66,12 @@
                             <button type="submit" class="btn btn-default">
                             修改
                             </button>
+                            {% if pid %}
+                                <a href="/project/index?pid={{ pid }}">
+                                    父级对象
+                                </a>
+                            {% endif %}
+
                         </div>
                     </div>
                 </form>

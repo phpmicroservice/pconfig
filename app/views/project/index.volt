@@ -29,7 +29,7 @@
 
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>ID - PID -PPID</th>
                         <th>名字(备注)</th>
                         <th>类型</th>
                   
@@ -40,7 +40,10 @@
                 <tbody>
                     {% for item in info.items %}
                     <tr>
-                        <th>{{item.id}}</th>
+                        <th>
+                        {{item.id}} - {{item.pid}} - {{item.ppid}}
+
+                        </th>
                        <td>{{item.name}}({{item.remark}})</td>
                         <th>{{ttip[item.type]}}({{item.type}} )</th>
                         
@@ -60,6 +63,12 @@
                             {% endif %}
                         </td>
                         <th>
+                            {% if item.pid %}
+                                <a href="/project/index?pid={{ item.pid }}">
+                                    父级对象
+                                </a>
+                            {% endif %}
+
                             <a href="{{ url('/project/edit',['id':item.id])}}">编辑</a>
                             &nbsp;&nbsp;&nbsp;
                             <a href="{{ url('/project/delete',['id':item.id])}}">删除</a>

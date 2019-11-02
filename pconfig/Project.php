@@ -194,10 +194,16 @@ class Project extends \Phalcon\Di\Injectable
     }
 
     /**
-     * 获取信息
+     *
      * @param type $name 名字
      * @param type $sub 是否获取子集
      * @param type $format 格式
+     */
+    /**
+     * 获取信息
+     * @param $name 名字
+     * @param int $pid 父级ｉｄ
+     * @return array|float|int|type|string|null
      */
     public static function get($name,$pid = 0)
     {
