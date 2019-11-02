@@ -35,6 +35,7 @@ create table project
     content varchar(100)                                                   not null comment '内容',
     pid     int default 0                                                  not null comment '上级id',
     remark  varchar(200)                                                   not null comment '备注信息',
+    ppid    int                                                            not null comment '顶级ＩＤ',
     constraint name
         unique (name, pid)
 )
@@ -49,33 +50,8 @@ create table relation
 )
     comment '关系表';
 
-create table z_1
-(
-    id    int(10) auto_increment
-        primary key,
-    id_re int(10)         not null,
-    name  varchar(70)     not null,
-    year  int             not null,
-    years int             not null,
-    year2 int default 999 not null,
-    year3 int default 999 not null,
-    constraint name
-        unique (name)
-)
-    charset = utf8;
 
-create table z_qqqq
-(
-    id    int(10) auto_increment
-        primary key,
-    id_re int(10)     not null,
-    name  varchar(70) not null,
-    year  int         not null,
-    years int         not null,
-    constraint name
-        unique (name),
-    constraint z_21_id_re_z_1_id
-        foreign key (id_re) references z_1 (id)
-)
-    charset = utf8;
-
+INSERT INTO `project` (`id`, `name`, `type`, `content`, `pid`, `remark`, `ppid`)
+VALUES (NULL, 'admin', 'array', '', '0', '管理员信息', '0'),
+       (NULL, 'username', 'string', 'admin', '1', '用户名', '0'),
+       (NULL, 'password', 'string', '$2y$10$Hp7Vu.nihPjbZV1R3A3SQ.B5WO14./DmW6gWNH3v0YqT1Ugtcyl.m', '1', '密码', '0')
