@@ -11,6 +11,7 @@
             {% include '/public/nav.volt' %}
         
             {% include '/public/breadcrumb.volt' %}
+            {% include '/public/paction.volt' %}
             {% set links = [['href':'/project/index','name':'配置对象'],['href':'/project/index','name':'列表']] %}
             {{ breadcrumb(links) }}
 
@@ -63,30 +64,7 @@
                             {% endif %}
                         </td>
                         <th>
-                            {% if item.pid %}
-                                <a href="/project/index?pid={{ item.pid }}">
-                                    父级对象
-                                </a>
-                            {% endif %}
-
-                            <a href="{{ url('/project/edit',['id':item.id])}}">编辑</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="{{ url('/project/delete',['id':item.id])}}">删除</a>
-                            <br><br>
-                            <a href="{{ url('/project/add',['pid':item.id])}}">增加下级配置</a>
-                            &nbsp;&nbsp;&nbsp;
-                            <a href="{{ url('/project/index',['pid':item.id])}}">
-                                关联对象
-                            </a>
-
-                            <a href="{{ url('/project/index',['pid':item.id,'only_sub':1])}}">
-                                下级对象
-                            </a>
-                                
-                                
-                            <a href="{{ url('/project/output',['id':item.id])}}">
-                                输出
-                            </a>
+                          {{ project_action(item) }}
                         </th>
                      
                     </tr>

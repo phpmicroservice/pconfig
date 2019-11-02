@@ -14,12 +14,14 @@
             
             
             {% include '/public/breadcrumb.volt' %}
-            {% set links = [['href':'/project/index','name':'配置对象'],['name':'详情']] %}
+            {% include '/public/paction.volt' %}
+            {% set links = [
+                ['href':'/project/index','name':'配置对象'],
+                ['name':'详情']] %}
             {{ breadcrumb(links) }}
             {% include '/project/infomcaro.volt' %}
-            <a href="{{ url('/project/index',['pid':info.id]) }}">
-                关联对象
-            </a>
+
+            {{ project_action(info) }}
             <table class="table table-bordered table-hover">
 
                 <thead>
