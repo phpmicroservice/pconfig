@@ -15,6 +15,7 @@ class Login extends \Phalcon\Mvc\Controller {
         $this->view->setVar('login', $this->session->get('login'));
         $this->view->setVar('ctip',[
             'string' => '字符串类型内容',
+            'bool' => '布尔类型内容',
             'int' => '内容将转换为数字型输出',
             'float' => '内容将转换为浮点型输出',
             'inherit'=>'继承,内容无效',
@@ -28,6 +29,7 @@ class Login extends \Phalcon\Mvc\Controller {
             'string' => '字符串类型',
             'int' => '整形',
             'float' => '浮点型',
+            'bool' => '布尔类型',
             'inherit'=>'继承,继承父级内容并覆盖',
             'merge'=>'合并多个配置项',
             'array'=>'关联集合',

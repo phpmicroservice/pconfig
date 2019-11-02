@@ -17,8 +17,12 @@ class Project extends Login
         
         $page = $this->request->getQuery('page','int',1);
         $pid = $this->request->getQuery('pid','int',0);
+        $ppid = $this->request->getQuery('ppid', 'int', 0);
+        $only_sub = $this->request->getQuery('only_sub', 'int', 0);
         $where=[
-            'pid'=>$pid
+            'pid' => $pid,
+            'ppid' => $ppid,
+            'only_sub' => $only_sub
         ];
         $this->view->setVar('where', $where);
         if($where['pid']){

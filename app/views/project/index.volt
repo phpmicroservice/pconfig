@@ -78,6 +78,10 @@
                             <a href="{{ url('/project/index',['pid':item.id])}}">
                                 关联对象
                             </a>
+
+                            <a href="{{ url('/project/index',['pid':item.id,'only_sub':1])}}">
+                                下级对象
+                            </a>
                                 
                                 
                             <a href="{{ url('/project/output',['id':item.id])}}">

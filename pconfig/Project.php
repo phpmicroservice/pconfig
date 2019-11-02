@@ -141,40 +141,54 @@ class Project extends \Phalcon\Di\Injectable
     {
 
         $build = $this->modelsManager->createBuilder()
-                ->from(\db\models\project::class);
-        if ($where['id'] ?? 0)
-        {
+            ->from(\db\models\project::class);
+        if ($where['id'] ?? 0) {
             $build->andWhere(' id = :id:', [
                 'id' => $where['id']
             ]);
         }
-	if($where['cid']){
-	    # 消费者的
-	    $idlist = Relation::idlist($where['cid'],'cp');
-	   
-	    $where['in']=$idlist;
-	}
-	
-	
-	if(isset($where['in'])){
-            $build->andWhere(' id IN ({letter:array})',[
-                'letter'=> empty($where['in'])?[10]:$where['in']
+        if ($where['cid']) {
+            # 消费者的
+            $idlist = Relation::idlist($where['cid'], 'cp');
+
+            $where['in'] = $idlist;
+        }
+
+
+        if (isset($where['in'])) {
+            $build->andWhere(' id IN ({letter:array})', [
+                'letter' => empty($where['in']) ? [10] : $where['in']
             ]);
         }
-	
-        if (isset($where['pid']))
-        {
-            $build->andWhere(' id = :id: or ppid = :id: or pid = :id:', [
+
+        if (isset($where['pid'])) {
+
+            if ($where['only_sub'] ?? 0) {
+
+                # 只看自己和下级
+                $build->andWhere(' id = :id: or pid = :id:', [
+                    'id' => $where['pid']
+                ]);
+            } else {
+
+                $build->andWhere(' id = :id: or ppid = :id: or pid = :id:', [
+                    'id' => $where['pid']
+                ]);
+            }
+
+        }
+
+        if ($where['ppid'] ?? 0) {
+            $build->andWhere(' id = :id: or ppid = :id: ', [
                 'id' => $where['pid']
             ]);
-            
         }
-        
-        
+
+
         $paginator = new \Phalcon\Paginator\Adapter\QueryBuilder([
             'builder' => $build,
-            'page'    => $page,
-            'limit'   => $limit
+            'page' => $page,
+            'limit' => $limit
         ]);
         return $paginator->paginate();
     }
@@ -272,6 +286,11 @@ class Project extends \Phalcon\Di\Injectable
                 return floatval($pr->content);
                 # 浮点
                 break;
+            case 'bool':
+                return boolval($pr->content);
+                # 浮点
+                break;
+
         }
     }
     
