@@ -75,7 +75,7 @@ class Project extends Login
             if(is_string($re)){
                  return $this->error($re);
             }
-            return $this->success('成功','/project/index');
+            return $this->success('成功', '/project/index?pid=' . $data['pid']);
         }
         $pid = $this->request->get('pid','int',0);
         $this->view->setVar('pid', $pid);

@@ -164,7 +164,7 @@ class Project extends \Phalcon\Di\Injectable
 	
         if (isset($where['pid']))
         {
-            $build->andWhere(' id = :id: or ppid = :id:', [
+            $build->andWhere(' id = :id: or ppid = :id: or pid = :id:', [
                 'id' => $where['pid']
             ]);
             
