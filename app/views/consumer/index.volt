@@ -41,6 +41,7 @@
                                 <a href="/project/index?cid={{item.id}}">对象</a>
                                 
                                 <a href="/consumer/edit?id={{item.id}}">编辑</a>
+                                <a href="/consumer/delete?id={{item.id}}">删除</a>
                             </th>
 
                         </tr>

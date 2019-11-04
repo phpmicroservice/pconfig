@@ -66,9 +66,17 @@ class Auth extends \Phalcon\Validation\Validator
                     }
 
                     break;
-
                 default:
+                    if (!$alc->isAllowedAccess($data)) {
+                        $message = $this->getOption('message');
+                        $validation->appendMessage(
+                            new \Phalcon\Validation\Message($message, $attribute, 'Ip')
+                        );
+                        return FALSE;
+                    }
+
                     break;
+
             }
         }
         return TRUE;

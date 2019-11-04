@@ -29,10 +29,19 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">名字</label>
+                    <div class="col-sm-10">
+                        <input type="string" class="form-control"
+                               value="" name="name">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
                     <label class="col-sm-2 control-label">内容</label>
                     <div class="col-sm-4">
                         <input type="string" class="form-control" v-model="content" value="{{info.content}}"
-                            name="content">
+                               name="content">
                     </div>
 
                     <div class="col-sm-6">

@@ -50,9 +50,15 @@
                          <a href="/alc/add" style="color:white">添加ALC</a>
                     </button>
                     {% if where['cid'] %}
-                    <button type="button" class="btn btn-primary">
-                         <a href="/relation/addca?cid={{where['cid']}}" style="color:white">消费者绑定</a>
-                    </button>
+
+                         <a   class="btn btn-primary" href="/relation/addca?cid={{where['cid']}}" style="color:white">
+                         消费者绑定
+                         </a>
+
+                         <a   class="btn btn-warning" href="/project/index?cid={{where['cid']}}" style="color:white">
+                          消费者 - 对象
+                          </a>
+
                     {% endif %}
                     
                 </div>

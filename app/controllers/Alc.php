@@ -16,7 +16,8 @@ class Alc extends Login
         $this->view->setVar('alc_type', [
             'ip' => 'ip地址验证',
             'token' => 'token验证',
-            'sign' => 'sign验证'
+            'sign' => 'sign验证',
+            'kong' => '空验证'
         ]);
     }
 
@@ -46,6 +47,7 @@ class Alc extends Login
             $data = [
                 'id' => $this->request->getPost('id', 'int', 0),
                 'type' => $this->request->getPost('type', 'string'),
+                'name' => $this->request->getPost('name', 'string'),
                 'content' => $this->request->getPost('content', 'string'),
             ];
 
@@ -72,7 +74,7 @@ class Alc extends Login
         if ($this->request->isPost()) {
             # 修改
             $data = [
-
+                'name' => $this->request->getPost('name', 'string'),
                 'type' => $this->request->getPost('type', 'string'),
                 'content' => $this->request->getPost('content', 'string'),
             ];

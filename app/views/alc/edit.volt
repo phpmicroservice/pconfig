@@ -22,6 +22,7 @@
                       
                         
                         <th>名字</th>
+                        <th>类型</th>
                         <th>备注</th>
                         
                     </tr>
@@ -30,6 +31,7 @@
                    
                     <tr>
                         <th>{{info.id}}</th>
+                        <td>{{ info.name }}</td>
                         <td>{{info.type}}</td>
                         <td>{{info.content}}</td>
                     </tr>
@@ -41,7 +43,7 @@
             <div style="width: 90%;">
                 <form class="form-horizontal" method="post">
                     <div class="form-group">
-                        <label  class="col-sm-2 control-label">Name</label>
+                        <label class="col-sm-2 control-label">Type</label>
                         <div class="col-sm-10">
                            
                             
@@ -52,6 +54,15 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">名字</label>
+                        <div class="col-sm-10">
+                            <input type="string" class="form-control"
+                                   value="{{ info.name }}" name="name">
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label  class="col-sm-2 control-label">内容</label>
                         <div class="col-sm-10">
