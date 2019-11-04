@@ -1,4 +1,3 @@
-
 <ul class="nav nav-pills">
     <li role="presentation" >
         <a href="{{ url('consumer/index') }}">消费者</a>
@@ -7,7 +6,7 @@
         <a href="{{ url('alc/index') }}">权限</a>
     </li>
     <li role="presentation" >
-        <a href="{{ url('project/index') }}">对象</a>
+        <a href="{{ url('project/index') }}">配置对象</a>
     </li>
     
     

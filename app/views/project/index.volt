@@ -78,8 +78,14 @@
                     </button>
                    
                     {% if where['cid'] %}
-                    <button type="button" class="btn btn-primary">
-                       <a href="/relation/addcp?cid={{where['cid']}}" style="color:white">消费者绑定</a> </button>
+
+                        <a class="btn btn-primary" href="/relation/addcp?cid={{where['cid']}}" style="color:white">
+                            消费者绑定
+                        </a>
+                        <a class="btn btn-warning" href="/alc/index?cid={{where['cid']}}" style="color:white">
+                            消费者 - ALC
+                        </a>
+
                     {% endif %}
                 </div>
             
