@@ -2,6 +2,8 @@
 
 namespace pconfig;
 
+use Phalcon\Db;
+
 /**
  * Project
  * 配置对象类
@@ -10,7 +12,7 @@ namespace pconfig;
 class Project extends \Phalcon\Di\Injectable
 {
 
-            
+
     /**
      * 列表 根据 id列表
      * @param type $in
@@ -19,15 +21,14 @@ class Project extends \Phalcon\Di\Injectable
     public static function list4ids($in)
     {
         $list = \db\models\project::find([
-                    'id IN ({id:array})',
-                    'bind' => [
-                        'id' => $in
-                    ]
+            'id IN ({id:array})',
+            'bind' => [
+                'id' => $in
+            ]
         ]);
         return $list;
     }
-    
-    
+
 
     /**
      * 删除
@@ -40,9 +41,9 @@ class Project extends \Phalcon\Di\Injectable
         if(!$validation->check(['id'=>$id])){
             return $validation->getMessage();
         }
-        
+
         $model =\db\models\project::findFirstById($id);
-       
+
         if($model->delete()===FALSE){
             return '删除失败';
         }
@@ -56,21 +57,21 @@ class Project extends \Phalcon\Di\Injectable
      */
     public static function add($data)
     {
-        
+
         $validation =new validation\ProjectAdd();
         if(!$validation->check($data)){
             return $validation->getMessage();
         }
         $data['ppid']= self::ppid($data);
         $data['create_time']= date(MYSQL_DATA_F);
-	$data['update_time']= date(MYSQL_DATA_F);
+        $data['update_time']= date(MYSQL_DATA_F);
         $model =new \db\models\project();
         if($model->save($data)===FALSE){
             return '增加失败'.modelmessage($model->getMessages());
         }
         return TRUE;
     }
-    
+
     /**
      * PPid 顶级ID
      * @param type $data
@@ -78,7 +79,7 @@ class Project extends \Phalcon\Di\Injectable
      */
     private static function ppid($data)
     {
-       
+
         if($data['type'] == 'inherit' ){
             # 继承
             $p= \db\models\project::findFirstById($data['pid']);
@@ -87,7 +88,7 @@ class Project extends \Phalcon\Di\Injectable
         if($data['pid']){
             # 读取父级
             $p= \db\models\project::findFirstById($data['pid']);
-            
+
             if($p){
                 if( $p->ppid){
                     return $p->ppid;
@@ -97,21 +98,21 @@ class Project extends \Phalcon\Di\Injectable
             return $data['pid'];
         }
         return 0;
-        
+
     }
 
     public static function pidlist($id)
     {
-	
-	$data =\db\models\project::findFirstById($id);
-	if($data){
-	    if($data->pid){
-		$pid2 = self::pidlist($data->pid);
-		return array_merge($pid2,[$id]);
-	    }
-	    return [$id];
-	}
-	return [$id];
+
+        $data =\db\models\project::findFirstById($id);
+        if($data){
+            if($data->pid){
+                $pid2 = self::pidlist($data->pid);
+                return array_merge($pid2,[$id]);
+            }
+            return [$id];
+        }
+        return [$id];
     }
 
 
@@ -126,7 +127,7 @@ class Project extends \Phalcon\Di\Injectable
         if(!$validation->check($data)){
             return $validation->getMessage();
         }
-        
+
         $model = \db\models\project::findFirst($data['id']);
         if($model->save($data)===FALSE){
             return '修改失败';
@@ -147,7 +148,7 @@ class Project extends \Phalcon\Di\Injectable
                 'id' => $where['id']
             ]);
         }
-        if ($where['cid']) {
+        if ($where['cid'] ?? 0) {
             # 消费者的
             $idlist = Relation::idlist($where['cid'], 'cp');
 
@@ -155,7 +156,7 @@ class Project extends \Phalcon\Di\Injectable
         }
 
 
-        if (isset($where['in'])) {
+        if ($where['in'] ?? []) {
             $build->andWhere(' id IN ({letter:array})', [
                 'letter' => empty($where['in']) ? [10] : $where['in']
             ]);
@@ -183,6 +184,11 @@ class Project extends \Phalcon\Di\Injectable
                 'id' => $where['pid']
             ]);
         }
+        if ($where['search'] ?? '') {
+            $build->andWhere('name LIKE :name: or remark LIKE :name:', [
+                'name' => '%' . $where['search'] . '%'
+            ]);
+        }
 
 
         $paginator = new \Phalcon\Paginator\Adapter\QueryBuilder([
@@ -190,6 +196,7 @@ class Project extends \Phalcon\Di\Injectable
             'page' => $page,
             'limit' => $limit
         ]);
+
         return $paginator->paginate();
     }
 
@@ -200,8 +207,7 @@ class Project extends \Phalcon\Di\Injectable
     public static function info($id, $content = FALSE)
     {
         $pr = \db\models\project::findFirst($id);
-        if ($content)
-        {
+        if ($content) {
             $pr->content = self::typeConversion($pr);
         }
         return $pr;
@@ -222,21 +228,20 @@ class Project extends \Phalcon\Di\Injectable
     public static function get($name,$pid = 0)
     {
         $pr = \db\models\project::findFirst([
-                    'name = :name: and pid = :pid:',
-                    'bind' => [
-                        'name' => $name,
-                        'pid' => $pid
-                    ]
+            'name = :name: and pid = :pid:',
+            'bind' => [
+                'name' => $name,
+                'pid' => $pid
+            ]
         ]);
 
-        if ($pr)
-        {
+        if ($pr) {
             return self::typeConversion($pr);
         }
         return NULL;
     }
 
-    
+
     /**
      * 获取信息使用id
      * @param type $id Id
@@ -244,20 +249,18 @@ class Project extends \Phalcon\Di\Injectable
     public static function get4id($id)
     {
         $pr = \db\models\project::findFirstById($id);
-        if ($pr)
-        {
+        if ($pr) {
             return self::typeConversion($pr);
         }
         return NULL;
     }
-    
+
     /**
      * 类型转换
      */
     private static function typeConversion(\db\models\project $pr)
     {
-        switch ($pr->type)
-        {
+        switch ($pr->type) {
             case 'array':
                 return self::get4array($pr->id);
                 # 数组
@@ -293,7 +296,7 @@ class Project extends \Phalcon\Di\Injectable
 
         }
     }
-    
+
     /**
      * 合并
      * @param type $content
@@ -303,18 +306,17 @@ class Project extends \Phalcon\Di\Injectable
     {
         $in = explode(',', $content);
         $list = self::list4ids($in);
-        
+
         $arr = [];
-        foreach ($list as $pr)
-        {
+        foreach ($list as $pr) {
             $arr[$pr->name] = self::typeConversion($pr);
         }
         return $arr;
     }
 
-    
+
     /**
-     * 
+     *
      * @param type $id
      */
     private static function get4inherit($id)
@@ -336,16 +338,15 @@ class Project extends \Phalcon\Di\Injectable
     private static function get4array($id)
     {
         $list = \db\models\project::find([
-                    'pid = :pid: and ( pid = :pid: and type != "inherit" )',
-                    'bind' => [
-                        'pid' => $id
-                    ]
+            'pid = :pid: and ( pid = :pid: and type != "inherit" )',
+            'bind' => [
+                'pid' => $id
+            ]
         ]);
 
         $arr = [];
 
-        foreach ($list as $pr)
-        {
+        foreach ($list as $pr) {
             $arr[$pr->name] = self::typeConversion($pr);
         }
         return $arr;
@@ -358,15 +359,14 @@ class Project extends \Phalcon\Di\Injectable
     private static function get4index($id)
     {
         $list = \db\models\project::find([
-                    'pid = :pid: and ( pid = :pid: and type != "inherit" ) ',
-                    'bind' => [
-                        'pid' => $id
-                    ]
+            'pid = :pid: and ( pid = :pid: and type != "inherit" ) ',
+            'bind' => [
+                'pid' => $id
+            ]
         ]);
 
         $arr = [];
-        foreach ($list as $pr)
-        {
+        foreach ($list as $pr) {
             $arr[] = self::typeConversion($pr);
         }
         sort($arr);

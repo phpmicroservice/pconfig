@@ -31,12 +31,12 @@ class Sign extends Injectable implements \pconfig\AlcInterface
      */
     public function isAllowedAccess($resource = [])
     {
-	sort($resource);
-        if(md5(json_encode($resource)) == $this->sign){
-	    return TRUE;
-	}
-	return FALSE;
+        sort($resource);
+        if (md5(json_encode($resource)) == $this->sign) {
+            return TRUE;
+        }
+        return FALSE;
     }
 
-    
+
 }

@@ -19,6 +19,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>名字</th>
                             <th>类型</th>
                             <th>内容</th>
                             <th>操作</th>
@@ -28,6 +29,7 @@
                         {% for item in info.items %}
                         <tr>
                             <th>{{item.id}}</th>
+                            <td>{{item.name}}</td>
                             <td>{{item.type}}</td>
                             <td>{{item.content}}</td>
                             <th>

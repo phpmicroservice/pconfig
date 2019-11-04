@@ -12,10 +12,19 @@ class Consumer extends Login
     {
         
         $page = $this->request->getQuery('page','int',1);
-        $where=[];
+        $aid = $this->request->getQuery('aid', 'int', 0);
+        $search = $this->request->getQuery('search', 'string');
+
+        $where = [
+            'aid' => $aid,
+            'search' => $search
+        ];
         $consumer = new \pconfig\Consumers();
-        
+
         $info= $consumer->pagelist($where, $page);
+        if ($this->request->isAjax()) {
+            return json_encode($info);
+        }
         $this->view->setVar('info', $info);
         return $this->view->render('consumer', 'index');
         

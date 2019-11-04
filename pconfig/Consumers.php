@@ -93,6 +93,24 @@ class Consumers  extends \Phalcon\Di\Injectable
                 'id'=>$where['id']
             ]);
         }
+
+        if ($where['aid'] ?? 0) {
+            $idlist = Relation::idlist($where['aid'], 'ca');
+            $where['in'] = $idlist;
+        }
+
+
+        if (isset($where['in'])) {
+            $build->andWhere(' id IN ({letter:array})', [
+                'letter' => empty($where['in']) ? [0] : $where['in']
+            ]);
+        }
+        //search
+        if ($where['search'] ?? '') {
+            $build->andWhere('name LIKE :name:', [
+                'name' => '%' . $where['search'] . '%'
+            ]);
+        }
         $paginator = new \Phalcon\Paginator\Adapter\QueryBuilder([
             'builder'=>$build,
             'page'=>$page,

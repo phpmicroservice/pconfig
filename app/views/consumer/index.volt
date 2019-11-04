@@ -38,7 +38,7 @@
                             <th>
                                 <a href="/alc/index?cid={{item.id}}">权限</a>
                                 
-                                <a href="/project/index2?cid={{item.id}}">对象</a>
+                                <a href="/project/index?cid={{item.id}}">对象</a>
                                 
                                 <a href="/consumer/edit?id={{item.id}}">编辑</a>
                             </th>

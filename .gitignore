@@ -3,3 +3,4 @@
 .env
 *.volt.php
 .phalcon
+/runtime/log/sql.log

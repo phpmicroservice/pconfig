@@ -19,10 +19,12 @@ class Project extends Login
         $pid = $this->request->getQuery('pid','int',0);
         $ppid = $this->request->getQuery('ppid', 'int', 0);
         $only_sub = $this->request->getQuery('only_sub', 'int', 0);
+        $cid = $this->request->getQuery('cid', 'int', 0);
         $where=[
             'pid' => $pid,
             'ppid' => $ppid,
-            'only_sub' => $only_sub
+            'only_sub' => $only_sub,
+            'cid' => $cid
         ];
         $this->view->setVar('where', $where);
         if($where['pid']){
@@ -34,29 +36,24 @@ class Project extends Login
 
         $this->view->setVar('info', $info);
         return $this->view->render('project', 'index');
-        
     }
-    
-    public function index2()
+
+    public function search()
     {
-   
-        $page = $this->request->getQuery('page','int',1);
-        $cid = $this->request->getQuery('cid','int',0);
+        $search = $this->request->getQuery('search', 'string');
+        $id = $this->request->getQuery('id', 'int');
         $where=[
-            'cid'=>$cid
+            'id' => $id,
+            'search' => $search
         ];
-        $this->view->setVar('where', $where);
-        if($where['pid']){
-            $pinfo = \pconfig\Project::info($where['pid']);
-            $this->view->setVar('pinfo', $pinfo);
-        }
+
         $consumer = new \pconfig\Project();
-        $info= $consumer->pagelist($where, $page);
-        $this->view->setVar('info', $info);
-        return $this->view->render('project', 'index');
-        
+        $info = $consumer->pagelist($where, 1, 20);
+        return json_encode($info);
+
     }
-    
+
+
     /**
      * 增加
      * @return type

@@ -2,6 +2,9 @@
 
 namespace app;
 
+use Phalcon\Events\Event;
+use Phalcon\Events\Manager as EventsManager;
+use Phalcon\Db\Profiler as DbProfiler;
 use Phalcon\DI;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Volt;
@@ -12,6 +15,7 @@ use Phalcon\Http\Request;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Mvc\Application as BaseApplication;
 use Phalcon\Mvc\Model\Metadata\Memory as MemoryMetaData;
+use Phalcon\Logger\Adapter\File as FileAdapter;
 
 class Application extends BaseApplication {
 
@@ -43,6 +47,25 @@ class Application extends BaseApplication {
            return $filter;
         }
         );
+
+        $di->setShared(
+             'logger', function () {
+                   if (!is_dir(WWW_ROOT . "/runtime/log/")) {
+                       mkdir(WWW_ROOT . "/runtime/log/", true);
+                   }
+
+                 // Create the file logger in 'w' mode
+                        $logger = new FileAdapter(
+                            WWW_ROOT . '/runtime/log/sql.log',
+                            [
+                                'mode' => 'w',
+                            ]
+                        );
+                        return $logger;
+
+                }
+                );
+
        
 
 
@@ -141,8 +164,15 @@ class Application extends BaseApplication {
         $this->registerServices();
         $this->registerAutoloaders();
         $this->registerDb();
+        $this->registerEvent();
         $response = $this->handle();
         $response->send();
+    }
+
+    public function registerEvent()
+    {
+
+
     }
 
     /**
@@ -163,7 +193,21 @@ class Application extends BaseApplication {
                 'charset' => 'utf8'
             ];
 //            dd($config);
-            return \Phalcon\Db\Adapter\Pdo\Factory::load($config);
+            $connection= \Phalcon\Db\Adapter\Pdo\Factory::load($config);
+            $eventsManager = new EventsManager();
+
+                    // Listen  the database events
+                    $eventsManager->attach(
+                        'db:beforeQuery',
+                        function (Event $event, $connection) use ($profiler) {
+                            $sql = $connection->getSQLStatement();
+                           $logger = Di::getDefault()->get('logger');
+                            $logger->info($sql);
+                        }
+                    );
+                    // Assign the events manager to the connection
+                    $connection->setEventsManager($eventsManager);
+                    return $connection;
         }
         );
     }
