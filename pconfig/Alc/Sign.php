@@ -33,7 +33,7 @@ class Sign extends Injectable implements \pconfig\AlcInterface
     {
         $token = $resource['token'];
         unset($resource['token']);
-        if ($token == $this->getHash($resource)) {
+        if ($token == $this->getHash($resource, $this->sign)) {
             return TRUE;
         }
         return FALSE;
@@ -44,7 +44,7 @@ class Sign extends Injectable implements \pconfig\AlcInterface
      * @param $resource
      * @return string
      */
-    private function getHash(array $resource): string
+    private function getHash(array $resource, string $sign): string
     {
         $chuan = '';
         ksort($resource);
@@ -52,7 +52,7 @@ class Sign extends Injectable implements \pconfig\AlcInterface
             $chuan .= '&' . $k . '=' . $v;
         }
         $chuan = trim($chuan, '&');
-        $chuan = $chuan . '&key=' . $this->sign;
+        $chuan = $chuan . '&key=' . $sign;
         return md5(urlencode($chuan));
 
     }

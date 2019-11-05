@@ -31,6 +31,10 @@ class Auth extends \Phalcon\Validation\Validator
         # 读取关系
         $plist = \pconfig\Relation::lists($c->id, 'ca');
         if (count($plist) == 0) {
+            $message = $this->getOption('message');
+            $validation->appendMessage(
+                new \Phalcon\Validation\Message($message, $attribute, 'AlcError')
+            );
             return FALSE;
         }
         foreach ($plist as $p) {
@@ -50,7 +54,7 @@ class Auth extends \Phalcon\Validation\Validator
                     if (!$alc->isAllowedAccess($data['token'])) {
                         $message = $this->getOption('message');
                         $validation->appendMessage(
-                            new \Phalcon\Validation\Message($message, $attribute, 'Ip')
+                            new \Phalcon\Validation\Message($message, $attribute, 'Token')
                         );
                         return FALSE;
                     }
@@ -60,7 +64,7 @@ class Auth extends \Phalcon\Validation\Validator
                     if (!$alc->isAllowedAccess($data['get'])) {
                         $message = $this->getOption('message');
                         $validation->appendMessage(
-                            new \Phalcon\Validation\Message($message, $attribute, 'Ip')
+                            new \Phalcon\Validation\Message($message, $attribute, 'Sign')
                         );
                         return FALSE;
                     }

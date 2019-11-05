@@ -32,7 +32,6 @@ class Token extends Injectable implements \pconfig\AlcInterface
      */
     public function isAllowedAccess($resource = null)
     {
-	
         if ($this->token == $resource)
         {
             return TRUE;
