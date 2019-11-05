@@ -9,15 +9,16 @@ class Out extends Controller
 
     public function index()
     {
-        $cname = $this->request->getQuery('cname', 'string', 'public');
-        $pid = $this->request->getQuery('pid', 'string', 0);
-        $type = $this->request->getQuery('type', 'string', 'json');
+        $cname = $this->request->get('cname', 'string', 'public');
+        $pid = $this->request->get('pid', 'string', 0);
+        $type = $this->request->get('type', 'string', 'json');
+        $token = $this->request->get('token');
         $data = [
             'cname' => $cname,
             'pid' => explode('.', $pid),
             'type' => $type,
-            'get' => $this->request->getQuery(),
-            'token' => $this->request->getQuery('token'),
+            'data' => array_merge($this->request->getQuery(), $this->request->getPost()),
+            'token' => $token,
             'ip' => $this->request->getClientAddress()
         ];
         unset($data['get']['_url']);

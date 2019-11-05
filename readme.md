@@ -28,4 +28,4 @@
 4. 配置消费者对象信息
 5. 消费
 
-> 详见 Wiki
+cname  pid type

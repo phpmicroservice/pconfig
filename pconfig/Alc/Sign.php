@@ -31,11 +31,30 @@ class Sign extends Injectable implements \pconfig\AlcInterface
      */
     public function isAllowedAccess($resource = [])
     {
-        sort($resource);
-        if (md5(json_encode($resource)) == $this->sign) {
+        $token = $resource['token'];
+        unset($resource['token']);
+        if ($token == $this->getHash($resource)) {
             return TRUE;
         }
         return FALSE;
+    }
+
+    /**
+     * 获取hash 排序,拼接串,拼接key,url格式化,md5
+     * @param $resource
+     * @return string
+     */
+    private function getHash(array $resource): string
+    {
+        $chuan = '';
+        ksort($resource);
+        foreach ($resource as $k => $v) {
+            $chuan .= '&' . $k . '=' . $v;
+        }
+        $chuan = trim($chuan, '&');
+        $chuan = $chuan . '&key=' . $this->sign;
+        return md5(urlencode($chuan));
+
     }
 
 

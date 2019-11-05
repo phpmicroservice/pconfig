@@ -31,9 +31,9 @@ class Alc extends \Phalcon\Di\Injectable
         }
 
 
-        if ($where['in'] ?? []) {
+        if (isset($where['in'])) {
             $build->andWhere(' id IN ({letter:array})', [
-                'letter' => empty($where['in']) ? [10] : $where['in']
+                'letter' => empty($where['in']) ? [0] : $where['in']
             ]);
         }
 
