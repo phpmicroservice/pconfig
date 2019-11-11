@@ -55,7 +55,7 @@ class Index extends Controller
             'password' => $this->request->get('password', 'string'),
         ];
         $validation = new \app\validation\Login();
-        $message= $validation->validate($data);
+        $message= $validation->check($data);
         
         if(count($message) > 0){
             return $this->error($message);
