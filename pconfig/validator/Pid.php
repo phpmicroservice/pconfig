@@ -12,7 +12,7 @@ class Pid extends \Phalcon\Validation\Validator
     protected $_options=[
 	'message'=>'Pid'
     ];
-    public function validate(\Phalcon\Validation $validation, $attribute)
+    public function validate(\Phalcon\Validation $validation, string $attribute):bool
     {
 	$pids	 = $validation->getValue($attribute);
 	$cname	 = $validation->getValue('cname');

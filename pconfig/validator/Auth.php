@@ -10,7 +10,7 @@ namespace pconfig\validator;
 class Auth extends \Phalcon\Validation\Validator
 {
 
-    public function validate(\Phalcon\Validation $validation, $attribute)
+    public function validate(\Phalcon\Validation $validation, string $attribute):bool
     {
         $data = $validation->getData();
         $cname = $validation->getValue('cname');

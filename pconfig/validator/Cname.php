@@ -9,7 +9,7 @@ namespace pconfig\validator;
  */
 class Cname extends \Phalcon\Validation\Validator
 {
-    public function validate(\Phalcon\Validation $validation, $attribute)
+    public function validate(\Phalcon\Validation $validation, string $attribute):bool
     {
         $cname = $validation->getValue($attribute);
 
