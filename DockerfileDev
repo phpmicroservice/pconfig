@@ -38,7 +38,13 @@ RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VE
     && rm -r cphalcon-${PHALCON_VERSION}
 # 安装 composer
 RUN curl -sS https://getcomposer.org/installer | php;mv composer.phar /usr/local/bin/composer
-
+# 安装phalcon 的开发工具包
+WORKDIR /home
+ENV PHALCON_DEVTOOL_VERSION=3.4.4
+RUN curl -sSL "https://github.com/phalcon/phalcon-devtools/archive/v${PHALCON_DEVTOOL_VERSION}.tar.gz" | tar -xz \
+    && cd phalcon-devtools-${PHALCON_DEVTOOL_VERSION} \
+    && ./phalcon.sh \
+    && ln -s /home/phalcon-devtools-${PHALCON_DEVTOOL_VERSION}/phalcon.php /usr/bin/phalcon
 #重置工作目录
 WORKDIR /var/www/html
 # 预部署

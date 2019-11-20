@@ -14,7 +14,9 @@ services:
     environment:
     - PMA_ARBITRARY=1
   dev:
-    build: .
+    build:
+      context: .
+      dockerfile: DockerfileDev
     image: pconfig:master
     privileged: false
     restart: unless-stopped

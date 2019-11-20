@@ -9,5 +9,11 @@
   },
   "require-dev": {
     "phalcon/ide-stubs": "^3.4"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
   }
 }
