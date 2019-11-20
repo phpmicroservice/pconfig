@@ -21,7 +21,7 @@ class ProjectAdd extends Validation
         $this->add('type', new \Phalcon\Validation\Validator\InclusionIn( [
               "message" => "类型选择错误",
               "domain"  => [
-                 'index','array','string','int','decimal','inherit','merge'
+                  'index', 'array', 'string', 'int', 'decimal', 'inherit', 'merge', 'bool'
                   ]
           ]));
         

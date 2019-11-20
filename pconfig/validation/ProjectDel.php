@@ -19,7 +19,7 @@ class ProjectDel  extends Validation
     public function initialize()
     {
         $this->add('id', new \Phalcon\Validation\Validator\Callback([
-            'message'=>'不可删除',
+            'message' => '存在子级对象',
             'callback'=>function($data){
                 $id = $data['id'];
                 $mode = \db\models\project::findFirst([
