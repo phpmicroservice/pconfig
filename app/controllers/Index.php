@@ -64,8 +64,13 @@ class Index extends Controller
         $this->session->set('login', TRUE);
         return $this->success('登录成功',$this->session->get('dengluqian'));
     }
-    
-    
+
+    public function env()
+    {
+        dump($_ENV);
+    }
+
+
     public function demo()
     {
         \pconfig\Project::get($name);

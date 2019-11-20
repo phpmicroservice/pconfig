@@ -4,3 +4,4 @@
 *.volt.php
 .phalcon
 /runtime/log/sql.log
+.idea

@@ -18,6 +18,13 @@ if(is_file(WWW_ROOT.'/.env')){
 $dotenv->required('DATABASE_TYPE')->allowedValues([
     'mysql', 'postgresql', 'sqlite', 'mongodb'
 ]);
+$dotenv->required([
+    'DATABASE_HOST',
+    'DATABASE_PORT',
+    'DATABASE_USER',
+    'DATABASE_PASS',
+    'DATABASE_NAME'
+])->notEmpty();
 
 # 
 define('APP_DEBUG', (bool)getenv('APP_DEBUG'));
