@@ -21,13 +21,14 @@ class Out extends Controller
             'token' => $token,
             'ip' => $this->request->getClientAddress()
         ];
-        unset($data['get']['_url']);
-
+        unset($data['data']['_url']);
         $va = new \app\validation\Out();
         if (!$va->check($data)) {
+
             return \pconfig\Output::geshi($this->typedata([
                 'error' => 1,
-                'message' => $va->getMessage()
+                'message' => $va->getMessage(),
+                'data' => $data['data']
             ], $type), $type);
         }
         $data2 = $this->pid2data($data['pid']);

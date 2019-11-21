@@ -26,7 +26,6 @@ class Output extends \Phalcon\Di\Injectable
      */
     public static function geshi($data,$type='json')
     {
-      
         switch ($type){
             case 'json':
                 return self::json($data);

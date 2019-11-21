@@ -61,7 +61,7 @@ class Auth extends \Phalcon\Validation\Validator
 
                     break;
                 case 'sign':
-                    if (!$alc->isAllowedAccess($data['get'])) {
+                    if (!$alc->isAllowedAccess($data['data'])) {
                         $message = $this->getOption('message');
                         $validation->appendMessage(
                             new \Phalcon\Validation\Message($message, $attribute, 'Sign')

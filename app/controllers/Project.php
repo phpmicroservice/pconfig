@@ -26,6 +26,7 @@ class Project extends Login
             'only_sub' => $only_sub,
             'cid' => $cid
         ];
+
         $this->view->setVar('where', $where);
         if($where['pid']){
             $pinfo = \pconfig\Project::info($where['pid']);
@@ -81,7 +82,7 @@ class Project extends Login
         $pid = $this->request->get('pid','int',0);
         $this->view->setVar('pid', $pid);
         if($pid){
-            $pinfo = \pconfig\Project::info($where['pid']);
+            $pinfo = \pconfig\Project::info($pid);
             $this->view->setVar('pinfo', $pinfo);
         }
       
@@ -115,7 +116,6 @@ class Project extends Login
             $this->error('不存在的内容');
         }
         $content = \pconfig\Project::get($info->name, $info->pid);
-       
         $this->view->setVar('content', $content);
         $this->view->setVar('info', $info);
         
@@ -182,7 +182,7 @@ class Project extends Login
 
 
     /**
-     * 详情
+     * 继承的 详情 比对
      * @return type
      */
     public function inherit()
@@ -198,9 +198,8 @@ class Project extends Login
         $this->view->setVar('info', $info);
         
         # 要比对的
-        $minfo = \pconfig\Project::info($info->pid);
-        $mcontent= \pconfig\Project::get($minfo->name);
-
+        $minfo = \pconfig\Project::info($info->content);
+        $mcontent = \pconfig\Project::get($minfo->name, $minfo->pid);
         $this->view->setVar('mcontent', $mcontent);
         $this->view->setVar('minfo', $minfo);
         return $this->view->render('project', 'merge');

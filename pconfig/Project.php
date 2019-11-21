@@ -79,12 +79,6 @@ class Project extends \Phalcon\Di\Injectable
      */
     private static function ppid($data)
     {
-
-        if($data['type'] == 'inherit' ){
-            # 继承
-            $p= \db\models\project::findFirstById($data['pid']);
-            return self::ppid($p->toArray());
-        }
         if($data['pid']){
             # 读取父级
             $p= \db\models\project::findFirstById($data['pid']);
@@ -225,7 +219,7 @@ class Project extends \Phalcon\Di\Injectable
      * @param int $pid 父级ｉｄ
      * @return array|float|int|type|string|null
      */
-    public static function get($name,$pid = 0)
+    public static function get($name, $pid)
     {
         $pr = \db\models\project::findFirst([
             'name = :name: and pid = :pid:',
@@ -323,12 +317,10 @@ class Project extends \Phalcon\Di\Injectable
     {
         $ziji = self::info($id, FALSE);
 
-        $merge      = self::info($ziji->pid, TRUE);
+        $merge = self::info($ziji->content, TRUE);
         $ziji->type = $merge->type;
-
         $zijic = self::typeConversion($ziji);
-
-        return array_merge($merge->content, $zijic);
+        return array_replace_recursive($merge->content, $zijic);
     }
 
     /**
@@ -338,7 +330,7 @@ class Project extends \Phalcon\Di\Injectable
     private static function get4array($id)
     {
         $list = \db\models\project::find([
-            'pid = :pid: and ( pid = :pid: and type != "inherit" )',
+            'pid = :pid:',
             'bind' => [
                 'pid' => $id
             ]
