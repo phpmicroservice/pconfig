@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>消费者 列表</title>
+        <title>消费者 列表 - {{ sitename }}</title>
         
         {% include '/public/head.volt' %}
     </head>

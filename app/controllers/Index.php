@@ -11,6 +11,7 @@ class Index extends Controller
     
     public function initialize()
     {
+        $this->view->setVar('sitename', SITE_NAME);
         $this->view->setVar('login', $this->session->get('login'));
     }
     public function index()

@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>项目合并的详情</title>
+        <title>项目合并的详情- {{ sitename }}</title>
         {% include '/public/head.volt' %}
     </head>
     <body>

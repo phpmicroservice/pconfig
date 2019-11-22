@@ -28,6 +28,7 @@ $dotenv->required([
 
 # 
 define('APP_DEBUG', (bool)getenv('APP_DEBUG'));
+define('SITE_NAME', getenv('SITE_NAME') ?? 'PCONFIG');
 if(APP_DEBUG){
     error_reporting(E_ALL);
 ini_set('display_errors', '0');

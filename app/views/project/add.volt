@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>增加 项目</title>
+        <title>增加 项目 - {{ sitename }}</title>
         {% include '/public/head.volt' %}
     </head>
     <body>

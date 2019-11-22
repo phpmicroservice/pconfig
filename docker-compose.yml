@@ -24,5 +24,6 @@ services:
       - 9017:80
     environment:
       - DATABASE_TYPE=mysql
+      - SITE_NAME=开发测试
     volumes:
       - .:/var/www/html

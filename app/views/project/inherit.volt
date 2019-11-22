@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title> 继承项目  比对</title>
+        <title> 继承项目 比对- {{ sitename }}</title>
         {% include '/public/head.volt' %}
     </head>
     <body>
