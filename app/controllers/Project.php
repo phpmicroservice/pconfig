@@ -111,7 +111,7 @@ class Project extends Login
     {
         $id= $this->request->getQuery('id','int',0);
         $info = \pconfig\Project::info($id);
-       
+
         if(!$info){
             $this->error('不存在的内容');
         }

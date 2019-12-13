@@ -6,10 +6,23 @@
  * and open the template in the editor.
  */
 
-function modelmessage($messages) {
+function modelmessage($messages)
+{
     $mes = '';
     foreach ($messages as $message) {
         $mes .= $message . " ";
     }
     return $mes;
+}
+
+
+function dumpc100()
+{
+    static $a = 1;
+    $a++;
+    if ($a > 100) {
+        dd(func_get_args());
+    } else {
+        dump(func_get_args());
+    }
 }

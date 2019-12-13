@@ -264,7 +264,7 @@ class Project extends \Phalcon\Di\Injectable
                 # 索引数组
                 break;
             case 'inherit':
-                return self::get4inherit($pr->id);
+                return self::get4inherit($pr);
                 # 索引数组
                 break;
             case 'merge':
@@ -313,10 +313,8 @@ class Project extends \Phalcon\Di\Injectable
      *
      * @param type $id
      */
-    private static function get4inherit($id)
+    private static function get4inherit($ziji)
     {
-        $ziji = self::info($id, FALSE);
-
         $merge = self::info($ziji->content, TRUE);
         $ziji->type = $merge->type;
         $zijic = self::typeConversion($ziji);
