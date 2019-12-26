@@ -20,7 +20,7 @@ class Consumer extends Login
             'search' => $search
         ];
         $consumer = new \pconfig\Consumers();
-
+        $this->view->setVar('where', $where);
         $info= $consumer->pagelist($where, $page);
         if ($this->request->isAjax()) {
             return json_encode($info);

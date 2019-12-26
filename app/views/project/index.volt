@@ -93,7 +93,7 @@
 
             
             {% include '/public/pagination.volt' %}
-            {% set urldata = ['/consumer/index',[]] %}
+            {% set urldata = ['/project/index', where ] %}
             {{ pagination(info,urldata) }}
 
     </body>
