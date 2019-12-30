@@ -27,7 +27,7 @@ RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VE
     && cd ../../ \
     && rm -r cphalcon-${PHALCON_VERSION}
 # 安装 composer
-RUN curl -sS https://getcomposer.org/installer | php;mv composer.phar /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php;mv composer.phar /usr/local/bin/composer;composer global require slince/composer-registry-manager
 
 #重置工作目录
 WORKDIR /var/www/html
