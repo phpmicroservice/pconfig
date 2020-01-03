@@ -6,7 +6,7 @@ networks:
 services:
   pconfig:
     build: .
-    image: pconfig:master
+    image: phpmicroservice/pconfig:master
     privileged: false
     restart: unless-stopped
     ports:
