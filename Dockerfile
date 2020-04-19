@@ -19,8 +19,8 @@ COPY default.conf /etc/apache2/sites-enabled/000-default.conf
 RUN docker-php-ext-install bcmath mbstring;
 
 # 安装phalcon 版本
-ENV PHALCON_VERSION=3.4.3
-RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VERSION}" | tar -xz \
+ENV PHALCON_VERSION=3.4.5
+RUN curl -sSL -# "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VERSION}" | tar -xz \
     && cd cphalcon-${PHALCON_VERSION}/build \
     && ./install \
     && cp ../tests/_ci/phalcon.ini $(php-config --configure-options | grep -o "with-config-file-scan-dir=\([^ ]*\)" | awk -F'=' '{print $2}') \
